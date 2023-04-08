@@ -1,32 +1,127 @@
 import React from "react";
 
-import { SignInButton, useUser, SignedIn, SignedOut, useAuth, useSignIn } from "@clerk/nextjs";
+import Link from "next/link";
+
+import { SignInButton, useUser, useAuth } from "@clerk/nextjs";
 import { toast } from "react-hot-toast";
+import PersonasLogo from "~/img/personas";
+
+import { cn } from "~/lib/utils";
+
+import { Button } from "~/components/button";
+import { navigationMenuTriggerStyle } from "~/components/nav-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "~/components/nav-menu";
+
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
+  ({ className, title, children, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <a
+            ref={ref}
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-slate-700 dark:focus:bg-slate-700",
+              className
+            )}
+            {...props}
+          >
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-slate-500 dark:text-slate-400">
+              {children}
+            </p>
+          </a>
+        </NavigationMenuLink>
+      </li>
+    );
+  }
+);
+ListItem.displayName = "ListItem";
 
 const Nav = () => {
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
   const { signOut } = useAuth();
-  const { signIn } = useSignIn();
-  function signOutHandler() {
-    void toast.promise(signOut(), {
-      loading: "Signing Out...",
-      success: <b>Signed Out successfully!</b>,
-      error: <b>Could not sign out.</b>,
-    });
+  if (isSignedIn && !user) {
+    return null;
+  }
+  async function signOutHandler() {
+    await signOut()
+      .then(() => toast.success("Вы вышли из системы"))
+      .catch(() => toast.error("Ошибка выхода из системы"));
   }
   return (
-    <header className="flex flex-col items-center gap-x-40">
-      <h1 className="text-[34px] font-bold">Personas from 🇰🇿 {signIn?.status}</h1>
-      <h2 className="text-italic italic">
+    <header className="flex items-center w-[900px] justify-between mx-auto">
+      <section className="flex items-center gap-2">
+        <PersonasLogo width={30} height={30} />
+        <strong className="text-[18px] font-bold">
+          Personas <small className="font-normal">from 🇰🇿</small>
+        </strong>
+      </section>
+      {/* <h2 className="">
         Встрейчайте наших друзей 🤖
         {user?.fullName && `, ${user.fullName}.`}
-      </h2>
-      <SignedIn>
-        <button onClick={signOutHandler}>Sign out</button>
-      </SignedIn>
-      <SignedOut>
-        <SignInButton mode="modal" />
-      </SignedOut>
+      </h2> */}
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Tech stack</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ListItem
+                  key="typescript"
+                  title="TypeScript"
+                  href="https://www.typescriptlang.org/"
+                >
+                  TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+                </ListItem>
+                <ListItem key="nextjs" title="Next.js" href="https://nextjs.org/">
+                  The React Framework
+                </ListItem>
+                <ListItem key="tailwind" title="Tailwind CSS" href="https://tailwindcss.com/">
+                  A utility-first CSS framework for rapidly building custom designs.
+                </ListItem>
+                <ListItem key="prisma" title="Prisma" href="https://www.prisma.io/">
+                  Prisma is an open-source database toolkit.
+                </ListItem>
+                <ListItem key="planetScale" title="PlanetScale" href="https://www.planetscale.com/">
+                  PlanetScale is a database platform for modern applications.
+                </ListItem>
+                <ListItem key="trpc" title="tRPC" href="https://trpc.io/">
+                  tRPC is a full-stack framework for building data-driven applications.
+                </ListItem>
+                <ListItem key="clerk" title="Clerk" href="https://clerk.dev/">
+                  Clerk is a developer-friendly authentication and user management platform.
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/faq" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>FAQ</NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+      <div className="w-[80px] h-[40px]">
+        {isSignedIn ? (
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          <Button variant="outline" onClick={signOutHandler}>
+            Выйти
+          </Button>
+        ) : (
+          <SignInButton mode="modal">
+            <Button>Войти</Button>
+          </SignInButton>
+        )}
+      </div>
     </header>
   );
 };
