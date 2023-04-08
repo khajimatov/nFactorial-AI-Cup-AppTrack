@@ -1,6 +1,6 @@
 # nFactorial-AI-Cup-AppTrack
 
-## < Your Name >
+## Bakhram Khajimatov
 
 
 ## < Your App's Name >
