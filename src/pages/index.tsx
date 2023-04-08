@@ -18,7 +18,20 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex flex-col items-center justify-center">
         <Nav />
-        YAAA
+        <div className="face-gif"></div>
+        <div className="mt-10 mb-10">
+          <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+            Alpha version
+          </span>
+          <h1 className="scroll-m-20 text-4xl lg:text-5xl text-center font-bold tracking-tight title">
+            Persona Playground
+          </h1>
+        </div>
+        <h3>
+          <span className="gradient-animation">Create</span>,{" "}
+          <span className="gradient-animation-2">Interact</span>, and{" "}
+          <span className="gradient-animation-3">Customize</span> Personal AI Characters
+        </h3>
       </main>
     </>
   );

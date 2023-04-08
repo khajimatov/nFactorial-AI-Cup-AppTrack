@@ -61,9 +61,9 @@ const Nav = () => {
     <header className="flex items-center w-[900px] justify-between mx-auto">
       <section className="flex items-center gap-2">
         <PersonasLogo width={30} height={30} />
-        <strong className="text-[18px] font-bold">
+        <Link href="/" className="text-[18px] font-bold">
           Personas <small className="font-normal">from 🇰🇿</small>
-        </strong>
+        </Link>
       </section>
       {/* <h2 className="">
         Встрейчайте наших друзей 🤖
@@ -85,8 +85,8 @@ const Nav = () => {
                 <ListItem key="nextjs" title="Next.js" href="https://nextjs.org/">
                   The React Framework
                 </ListItem>
-                <ListItem key="tailwind" title="Tailwind CSS" href="https://tailwindcss.com/">
-                  A utility-first CSS framework for rapidly building custom designs.
+                <ListItem key="openai" title="OpenAI" href="https://openai.com/">
+                  OpenAI is an artificial intelligence research company.
                 </ListItem>
                 <ListItem key="prisma" title="Prisma" href="https://www.prisma.io/">
                   Prisma is an open-source database toolkit.
@@ -100,12 +100,16 @@ const Nav = () => {
                 <ListItem key="clerk" title="Clerk" href="https://clerk.dev/">
                   Clerk is a developer-friendly authentication and user management platform.
                 </ListItem>
+                <ListItem key="vercel" title="Vercel" href="https://vercel.com/">
+                  Vercel is a cloud platform for static sites, hybrid apps, and Serverless
+                  Functions.
+                </ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href="/faq" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>FAQ</NavigationMenuLink>
+            <Link href="/docs" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>Docs</NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
