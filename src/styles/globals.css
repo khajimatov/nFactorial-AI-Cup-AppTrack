@@ -16,7 +16,6 @@ body {
 }
 .face-gif {
   position: absolute;
-  right: 20%;
   rotate: 20deg;
   width: 100px;
   height: 100px;
@@ -33,4 +32,23 @@ body {
   transition-duration: 0.3s;
   transition-timing-function: ease;
   transition-delay: 0s;
+}
+.lines-papa {
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  display: flex;
+  opacity: 75%;
+  z-index: -1;
+}
+.lines {
+  background-image: url("/vector.svg");
+  width: 1px;
+  height: 100%;
+  margin-left: 10%;
+  background-repeat: repeat-y;
+  background-size: 100%;
 }

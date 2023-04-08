@@ -13,12 +13,10 @@ import { navigationMenuTriggerStyle } from "~/components/nav-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "~/components/nav-menu";
 
 const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
@@ -62,13 +60,9 @@ const Nav = () => {
       <section className="flex items-center gap-2">
         <PersonasLogo width={30} height={30} />
         <Link href="/" className="text-[18px] font-bold">
-          Personas <small className="font-normal">from 🇰🇿</small>
+          Persónas <small className="font-normal">from 🇰🇿</small>
         </Link>
       </section>
-      {/* <h2 className="">
-        Встрейчайте наших друзей 🤖
-        {user?.fullName && `, ${user.fullName}.`}
-      </h2> */}
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
