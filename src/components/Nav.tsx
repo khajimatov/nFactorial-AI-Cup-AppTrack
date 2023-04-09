@@ -60,7 +60,7 @@ const Nav = () => {
       <section className="flex items-center gap-2">
         <PersonasLogo width={30} height={30} />
         <Link href="/" className="text-[18px] font-bold">
-          Persónas <small className="font-normal">from 🇰🇿</small>
+          Persóna <small className="font-normal">from 🇰🇿</small>
         </Link>
       </section>
       <NavigationMenu>
@@ -110,7 +110,7 @@ const Nav = () => {
       </NavigationMenu>
       <div className="w-[80px] h-[40px]">
         {isSignedIn ? (
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          //eslint-disable-next-line @typescript-eslint/no-misused-promises
           <Button variant="outline" onClick={signOutHandler}>
             Выйти
           </Button>

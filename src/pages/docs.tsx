@@ -33,7 +33,7 @@ const Docs: NextPage = () => {
             <AccordionTrigger>Как работает взаимодействие с Персонажем?</AccordionTrigger>
             <AccordionContent>
               Для распознования речи используется Whisper, LLM: gpt-3.5-turbo, LangChain для
-              emmbeddings
+              embeddings
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
