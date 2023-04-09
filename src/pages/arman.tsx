@@ -41,7 +41,6 @@ const Arman: NextPage = () => {
     startRecording();
   }
 
-  const ctx = api.useContext();
 
   const { mutate } = api.example.submitTextPrompt.useMutation({
     onSuccess: () => {
@@ -61,7 +60,10 @@ const Arman: NextPage = () => {
     { userId: user?.id ? user.id : "" },
     { enabled: isLoaded && user?.id !== undefined }
   );
-  const { data: daata } = api.example.chat.useQuery({ content: "Hello" });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { data: daata } = api.example.chat.useQuery({
+    content: "Hello I am startup founder, wanna invest in modern new social network?",
+  });
 
   return (
     <>

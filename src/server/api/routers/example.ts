@@ -1,7 +1,7 @@
 import { clerkClient } from "@clerk/nextjs/server";
+import axios from "axios";
 import { z } from "zod";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
-import { OpenAIStream, type OpenAIStreamPayload } from "~/utils/OpenAIStream";
 
 export const exampleRouter = createTRPCRouter({
   getAll: privateProcedure
@@ -52,19 +52,27 @@ export const exampleRouter = createTRPCRouter({
         return new Response("No prompt in the request", { status: 400 });
       }
 
-      const payload: OpenAIStreamPayload = {
+      const payload: any = {
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: input.content }],
-        temperature: 0.7,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-        max_tokens: 200,
-        stream: true,
-        n: 1,
+        max_tokens: 30,
+        messages: [
+          { role: "system", content: "You are a trashtalked VC" },
+          { role: "user", content: input.content },
+        ],
       };
 
-      const stream = await OpenAIStream(payload);
-      return new Response(stream);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      const res = await axios.post("https://api.openai.com/v1/chat/completions", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+          Authorization: "Bearer " + process.env.OPENAI_API_KEY,
+        },
+      });
+      console.log(res);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+      return res.data.choices[0].message.content as {
+        data: { choices: { message: { content: string } }[] };
+      };
     }),
 });
