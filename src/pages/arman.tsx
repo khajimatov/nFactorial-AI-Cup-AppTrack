@@ -61,6 +61,7 @@ const Arman: NextPage = () => {
     { userId: user?.id ? user.id : "" },
     { enabled: isLoaded && user?.id !== undefined }
   );
+  const { data: daata } = api.example.chat.useQuery({ content: "Hello" });
 
   return (
     <>
