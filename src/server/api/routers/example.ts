@@ -1,6 +1,7 @@
 import { clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
-import { createTRPCRouter, privateProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
+import { OpenAIStream, type OpenAIStreamPayload } from "~/utils/OpenAIStream";
 
 export const exampleRouter = createTRPCRouter({
   getAll: privateProcedure
@@ -38,5 +39,32 @@ export const exampleRouter = createTRPCRouter({
       });
 
       return post;
+    }),
+
+  chat: publicProcedure
+    .input(
+      z.object({
+        content: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!input.content) {
+        return new Response("No prompt in the request", { status: 400 });
+      }
+
+      const payload: OpenAIStreamPayload = {
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: input.content }],
+        temperature: 0.7,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        max_tokens: 200,
+        stream: true,
+        n: 1,
+      };
+
+      const stream = await OpenAIStream(payload);
+      return new Response(stream);
     }),
 });

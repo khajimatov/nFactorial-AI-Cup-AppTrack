@@ -9,7 +9,7 @@ const PersonaCard = ({ isSignedIn }: { isSignedIn: boolean | undefined }) => {
   const router = useRouter();
   return (
     <>
-      <div className="max-w-sm bg-white w-[300px] border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-w-sm bg-white w-[300px] border border-gray-200 rounded-lg shadow">
         <Image
           className="rounded-t-lg w-full h-[200px] object-cover object-center"
           src="/arman.png"
