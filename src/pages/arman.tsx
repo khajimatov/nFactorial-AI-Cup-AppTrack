@@ -58,7 +58,7 @@ const Arman: NextPage = () => {
     },
   });
   const { data } = api.example.getAll.useQuery(
-    { userId: user?.id },
+    { userId: user?.id ? user.id : "" },
     { enabled: isLoaded && user?.id !== undefined }
   );
 
