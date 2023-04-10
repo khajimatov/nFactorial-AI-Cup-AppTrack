@@ -2,7 +2,6 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import { useUser } from "@clerk/nextjs";
-import { api } from "~/utils/api";
 
 import Nav from "~/components/Nav";
 import PersonaCard from "~/components/personaCard";
@@ -50,7 +49,6 @@ const Home: NextPage = () => {
           Некоторые из них вы возможно уже знаете. 👀
         </p>
         <div className="flex gap-10 mt-12 flex-col md:flex-row">
-          <PersonaCard isSignedIn={isSignedIn} />
           <PersonaCard isSignedIn={isSignedIn} />
         </div>
       </main>

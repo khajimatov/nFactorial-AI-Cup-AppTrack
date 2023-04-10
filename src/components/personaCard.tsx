@@ -1,21 +1,27 @@
 import React from "react";
 
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Button } from "~/components/button";
+
+import armanPic from "../../public/arman.png";
 
 const PersonaCard = ({ isSignedIn }: { isSignedIn: boolean | undefined }) => {
   const router = useRouter();
   return (
     <>
       <div className="max-w-sm bg-white w-[300px] border border-gray-200 rounded-lg shadow">
-        <img
-          className="rounded-t-lg w-full h-[200px] object-cover object-center"
-          src="/arman.png"
-          alt="Arman Suleimenov"
-          width={300}
-          height={150}
-        />
+        <div className="w-[300px]">
+          <Image
+            className="rounded-t-lg w-full h-[200px] object-cover object-center"
+            src={armanPic}
+            alt="Arman Suleimenov"
+            width={300}
+            height={150}
+            priority
+          />
+        </div>
         <div className="p-5">
           <span className="bg-green-100 rounded-full text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 dark:bg-green-900 dark:text-green-300">
             VOICE
