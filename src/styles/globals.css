@@ -23,7 +23,6 @@ body {
   background-size: 70%;
   mix-blend-mode: darken;
   top: 25%;
-  background-image: url("/command.gif");
 }
 .face-gif {
   position: absolute;
@@ -34,7 +33,6 @@ body {
   background-size: 70%;
   mix-blend-mode: darken;
   top: 25%;
-  background-image: url("/face-id.gif");
 }
 .title:hover {
   transform: scale(1.04);

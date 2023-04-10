@@ -6,6 +6,9 @@ import { useUser } from "@clerk/nextjs";
 import Nav from "~/components/Nav";
 import PersonaCard from "~/components/personaCard";
 
+import commandGif from "../../public/command.gif";
+import faceGif from "../../public/face-id.gif";
+
 const Home: NextPage = () => {
   const { user, isSignedIn } = useUser();
 
@@ -22,8 +25,14 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex flex-col items-center justify-center">
         <Nav />
-        <div className="face-gif hidden md:block right-0 md:right-[10%] lg:right-[15%]"></div>
-        <div className="command-gif hidden md:block left-0 md:left-[10%] lg:left-[15%]"></div>
+        <div
+          style={{ backgroundImage: `url('${faceGif.src}')` }}
+          className="face-gif hidden md:block right-0 md:right-[10%] lg:right-[15%]"
+        ></div>
+        <div
+          style={{ backgroundImage: `url('${commandGif.src}')` }}
+          className="command-gif hidden md:block left-0 md:left-[10%] lg:left-[15%]"
+        ></div>
         <div className="lines-papa">
           <div className="lines"></div>
           <div className="lines"></div>
