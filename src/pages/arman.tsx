@@ -89,7 +89,9 @@ const Arman: NextPage = () => {
               </div>
               {data?.map((message) => (
                 <div key={message.id}>
-                  {message.content}: {message.authorId}
+                  ME:{message.content}
+                  <br/>
+                  ARMAN:{message.system}
                 </div>
               ))}
             </div>

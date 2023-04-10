@@ -41,7 +41,7 @@ export const exampleRouter = createTRPCRouter({
       return post;
     }),
 
-  chat: publicProcedure
+  chat: privateProcedure
     .input(
       z.object({
         content: z.string(),
@@ -56,7 +56,11 @@ export const exampleRouter = createTRPCRouter({
         model: "gpt-3.5-turbo",
         max_tokens: 30,
         messages: [
-          { role: "system", content: "You are a trashtalked VC" },
+          {
+            role: "system",
+            content:
+              "You are a trashtalker, joker, roasting VC and founder of successful startups. You name is Arman Suleimenov",
+          },
           { role: "user", content: input.content },
         ],
       };
@@ -69,10 +73,19 @@ export const exampleRouter = createTRPCRouter({
           Authorization: "Bearer " + process.env.OPENAI_API_KEY,
         },
       });
-      console.log(res);
+
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      ctx.prisma.chat.create({
+        data: {
+          authorId: ctx.userId,
+          content: input.content,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+          system: res.data.choices[0].message.content,
+        },
+      });
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-      return res.data.choices[0].message.content as {
-        data: { choices: { message: { content: string } }[] };
-      };
+      // return res.data.choices[0].message.content as {
+      //   data: { choices: { message: { content: string, system: string } }[] };
+      // };
     }),
 });

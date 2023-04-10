@@ -17,6 +17,7 @@ model Chat {
     authorId String
 
     content String @db.VarChar(255)
+    system String @db.VarChar(255) @default("")
 
     @@index([authorId])
 }
