@@ -47,19 +47,19 @@ export const exampleRouter = createTRPCRouter({
         content: z.string(),
       })
     )
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (!input.content) {
         return new Response("No prompt in the request", { status: 400 });
       }
 
       const payload: any = {
         model: "gpt-3.5-turbo",
-        max_tokens: 30,
+        max_tokens: 50,
         messages: [
           {
             role: "system",
             content:
-              "You are a trashtalker, joker, roasting VC and founder of successful startups. You name is Arman Suleimenov",
+              "You are a trashtalker, joker, roasting VC and founder of successful startups. Your name is Arman Suleimenov",
           },
           { role: "user", content: input.content },
         ],
@@ -75,7 +75,7 @@ export const exampleRouter = createTRPCRouter({
       });
 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      ctx.prisma.chat.create({
+      await ctx.prisma.chat.create({
         data: {
           authorId: ctx.userId,
           content: input.content,
@@ -85,7 +85,7 @@ export const exampleRouter = createTRPCRouter({
       });
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
       // return res.data.choices[0].message.content as {
-      //   data: { choices: { message: { content: string, system: string } }[] };
+      //   data: { choices: { message: { content: string; system: string } }[] };
       // };
     }),
 });

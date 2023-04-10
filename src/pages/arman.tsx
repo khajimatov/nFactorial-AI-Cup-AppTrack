@@ -10,7 +10,7 @@ import useRecorder from "~/hooks/use-recorder";
 import useRecordingsList from "~/hooks/use-recordings-list";
 import { api } from "~/utils/api";
 import { formatMinutes, formatSeconds } from "~/utils/format-time";
-
+import armanPic from "../../public/arman.png";
 import { type UseRecorder } from "~/types/recorder";
 
 import Nav from "~/components/Nav";
@@ -41,11 +41,12 @@ const Arman: NextPage = () => {
     startRecording();
   }
 
+  const ctx = api.useContext();
 
-  const { mutate } = api.example.submitTextPrompt.useMutation({
+  const { mutate } = api.example.chat.useMutation({
     onSuccess: () => {
       setInput("");
-      // void ctx.example.getAll.invalidate();
+      void ctx.example.getAll.invalidate();
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors.content;
@@ -60,10 +61,6 @@ const Arman: NextPage = () => {
     { userId: user?.id ? user.id : "" },
     { enabled: isLoaded && user?.id !== undefined }
   );
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data: daata } = api.example.chat.useQuery({
-    content: "Hello I am startup founder, wanna invest in modern new social network?",
-  });
 
   return (
     <>
@@ -77,7 +74,7 @@ const Arman: NextPage = () => {
         <div className="flex flex-col md:flex-row w-[1000px] m-auto items-center p-[20px] gap-6">
           <Image
             className="rounded-2xl shadow"
-            src="/arman.png"
+            src={armanPic}
             alt="Arman Suleimenov"
             width={300}
             height={300}
@@ -92,6 +89,7 @@ const Arman: NextPage = () => {
                   ME:{message.content}
                   <br/>
                   ARMAN:{message.system}
+                  <hr/>
                 </div>
               ))}
             </div>
