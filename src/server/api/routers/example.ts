@@ -73,7 +73,7 @@ export const exampleRouter = createTRPCRouter({
           Authorization: "Bearer " + process.env.OPENAI_API_KEY,
         },
       });
-
+console.log(res); 
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       await ctx.prisma.chat.create({
         data: {

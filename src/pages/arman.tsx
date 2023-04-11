@@ -65,7 +65,7 @@ const Arman: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Arman Suleimenov</title>
+        <title>Chat with Arman</title>
         <meta name="description" content="Chat with Arman" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
