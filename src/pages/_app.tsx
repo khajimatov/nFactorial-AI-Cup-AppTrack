@@ -1,15 +1,17 @@
 import { type AppType } from "next/app";
+import { Inter } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
-import locals from "~/utils/locals";
 
 import "~/styles/globals.css";
 
+const inter = Inter({ subsets: ["latin"] });
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider localization={locals} {...pageProps}>
+    <ClerkProvider {...pageProps}>
       <Toaster position="top-center" />
       <Component {...pageProps} />
     </ClerkProvider>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const PersonasLogo = ({ width = 24, height = 24 }: { width?: number; height?: number }) => {
+const PersonaLogo = ({ width = 24, height = 24 }: { width?: number; height?: number }) => {
   return (
     <svg
       width={width}
@@ -35,4 +35,4 @@ const PersonasLogo = ({ width = 24, height = 24 }: { width?: number; height?: nu
   );
 };
 
-export default PersonasLogo;
+export default PersonaLogo;

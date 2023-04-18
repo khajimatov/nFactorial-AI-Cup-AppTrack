@@ -1,0 +1,85 @@
+.dark {
+  --radius: 8px;
+  --text-padding: 6px 16px;
+  --border: 2px;
+  --padding: 2px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: var(--radius);
+  border: 0;
+  background: conic-gradient(
+    from calc(var(--rx) * 360deg) at calc(var(--x) * 1px) calc(var(--y) * 1px),
+    hsl(10 90% 50%),
+    hsl(140 70% 50%),
+    hsl(320 70% 50%),
+    hsl(210 70% 50%),
+    hsl(10 70% 50%)
+  );
+  background-attachment: fixed;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--padding);
+  border: var(--border) solid hsl(0 0% 80%);
+}
+
+.dark:hover {
+  --hover: 1;
+  /*   border-color: transparent !important; */
+}
+
+.dark:after {
+  content: "";
+  position: absolute;
+  inset: 0px;
+  border-radius: calc(var(--radius) - var(--border));
+  transition: background 0.2s;
+  background: hsl(0 0% 100% / calc(1 - var(--hover, 0) * 0.25));
+}
+
+.dark:disabled{
+  opacity: 0.5;
+}
+
+.backdrop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius) - 4px);
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  backdrop-filter: blur(20px) brightness(2) saturate(0.5);
+}
+
+.text {
+  padding: var(--text-padding);
+  grid-row: 1;
+  grid-column: 1;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thatSvg {
+  width: 24px;
+}
+
+.dark {
+  border-color: hsl(0 0% 20%);
+}
+
+.dark .backdrop {
+  backdrop-filter: blur(20px) brightness(2) saturate(1);
+}
+
+.dark:after {
+  background: hsl(0 0% 10% / calc(1 - var(--hover, 0) * 0.25));
+}
+
+.dark {
+  color: white;
+}

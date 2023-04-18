@@ -15,32 +15,18 @@ const Docs: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Personas | Docs</title>
-        <meta name="description" content="Personas FAQ" />
+        <title>Persóna Docs</title>
+        <meta name="description" content="Persóna Docs" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center justify-center">
         <Nav />
-        <h1 className="text-3xl font-bold mt-10 mb-10">Документация</h1>
-        <Accordion type="single" collapsible className="w-[450px]">
+        <h1 className="text-3xl font-bold mt-10 mb-10">Documentation</h1>
+        <Accordion type="single" collapsible defaultValue="item-1" className="w-[450px]">
           <AccordionItem value="item-1">
-            <AccordionTrigger>Как взаимодействовать с Персонажем?</AccordionTrigger>
+            <AccordionTrigger>What are limitations?</AccordionTrigger>
             <AccordionContent>
-              Пока что только через текстовый чат. Только у некоторых Персонажей есть голосовой чат.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>Как работает взаимодействие с Персонажем?</AccordionTrigger>
-            <AccordionContent>
-              Для распознования речи используется Whisper, LLM: gpt-3.5-turbo, LangChain для
-              embeddings
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Использование бесплатное?</AccordionTrigger>
-            <AccordionContent>
-              Да, но с ограничениями. Например, вы не можете пока что создавать своих Персонажей,
-              также есть ограничения на количество сообщений(максимум 10 сообщений).
+              For now only through a text chat. Only some Characters have a voice chat.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

@@ -16,7 +16,7 @@ export async function startRecording(setRecorderState: SetRecorder) {
   }
 }
 
-export function saveRecording(recorder: any) {
+export function saveRecording(recorder: MediaRecorder | null) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  if (recorder.state !== "inactive") recorder.stop();
+  if (recorder && recorder.state !== "inactive") recorder.stop();
 }

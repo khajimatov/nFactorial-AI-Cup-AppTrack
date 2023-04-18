@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useUser } from "@clerk/nextjs";
 
 import Nav from "~/components/Nav";
-import PersonaCard from "~/components/personaCard";
+import PersonaCard from "~/components/personaCard/personaCard";
 
 import commandGif from "../../public/command.gif";
 import faceGif from "../../public/face-id.gif";
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
           <div className="lines"></div>
         </div>
         <div className="mt-4">
-          <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+          <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-1 rounded-full">
             BETA
           </span>
           <h1 className="scroll-m-20 text-4xl lg:text-5xl text-center font-bold tracking-tight title">
@@ -53,9 +53,9 @@ const Home: NextPage = () => {
           </h1>
         </div>
         <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
-          Создавайте, Взаимодействуйте и Общайтесь с AI Персонажами.
+          Create, Interact, and Communicate with AI Characters.
           <br />
-          Некоторые из них вы возможно уже знаете. 👀
+          Some of them you may already know.👀
         </p>
         <div className="flex gap-10 mt-12 flex-col md:flex-row">
           <PersonaCard isSignedIn={isSignedIn} />

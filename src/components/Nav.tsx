@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { SignInButton, useUser, useAuth } from "@clerk/nextjs";
 import { toast } from "react-hot-toast";
-import PersonasLogo from "~/img/personas";
+import PersonaLogo from "~/img/persona";
 
 import { cn } from "~/lib/utils";
 
@@ -27,15 +27,13 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
           <a
             ref={ref}
             className={cn(
-              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-slate-700 dark:focus:bg-slate-700",
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 focus:bg-slate-100",
               className
             )}
             {...props}
           >
             <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-slate-500 dark:text-slate-400">
-              {children}
-            </p>
+            <p className="line-clamp-2 text-sm leading-snug text-slate-500">{children}</p>
           </a>
         </NavigationMenuLink>
       </li>
@@ -52,13 +50,17 @@ const Nav = () => {
   }
   async function signOutHandler() {
     await signOut()
-      .then(() => toast.success("Вы вышли из системы"))
-      .catch(() => toast.error("Ошибка выхода из системы"));
+      .then(() => {
+        toast.success("Signed out successfully");
+      })
+      .catch(() => {
+        toast.error("An error occurred while signing out. Please try again or contact support.");
+      });
   }
   return (
-    <header className="flex items-center w-[900px] justify-between mx-auto">
+    <header className="flex items-center w-[500px] md:w-[700px] lg:w-[900px] justify-between mx-auto">
       <section className="flex items-center gap-2">
-        <PersonasLogo width={30} height={30} />
+        <PersonaLogo width={30} height={30} />
         <Link href="/" className="text-[18px] font-bold">
           Persóna <small className="font-normal">from 🇰🇿</small>
         </Link>
@@ -108,15 +110,15 @@ const Nav = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="w-[80px] h-[40px]">
+      <div className="w-[80px] w-fit h-[40px]">
         {isSignedIn ? (
           //eslint-disable-next-line @typescript-eslint/no-misused-promises
           <Button variant="outline" onClick={signOutHandler}>
-            Выйти
+            Sign out
           </Button>
         ) : (
           <SignInButton mode="modal">
-            <Button>Войти</Button>
+            <Button>Sign in</Button>
           </SignInButton>
         )}
       </div>
