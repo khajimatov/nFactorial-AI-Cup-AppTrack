@@ -20,7 +20,7 @@ const Docs: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col items-center justify-center">
-        <Nav />
+        <Nav user={undefined} isSignedIn={undefined} />
         <h1 className="text-3xl font-bold mt-10 mb-10">Documentation</h1>
         <Accordion type="single" collapsible defaultValue="item-1" className="w-[450px]">
           <AccordionItem value="item-1">
