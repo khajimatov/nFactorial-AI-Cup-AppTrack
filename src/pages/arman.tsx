@@ -81,7 +81,7 @@ const Arman: NextPage = () => {
       mutate({ content: input });
     }
   }
-  const [yep2, setYep2] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [yep2, setYep2] = useState<number[]>([]);
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   }, [isLoaded]);
@@ -90,8 +90,8 @@ const Arman: NextPage = () => {
     chatUIRef.current?.scrollTo({
       top: chatUIRef.current.scrollHeight,
       behavior: "smooth",
-    })
-  }, [yep2]);
+    });
+  }, [isLoaded, yep2]);
 
   return (
     <>
@@ -128,9 +128,6 @@ const Arman: NextPage = () => {
               </div>
               <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
                 roast mode activated 🔥
-              </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
               </div>
               {yep2.map((y) => {
                 return (
@@ -171,8 +168,7 @@ const Arman: NextPage = () => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  setInput("");
-                  setYep2([...yep2, 1]);
+                  setYep2(yep2);
                   // handleSubmit();
                 }
               }}
