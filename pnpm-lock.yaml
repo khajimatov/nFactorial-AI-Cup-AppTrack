@@ -4,6 +4,9 @@ dependencies:
   '@clerk/nextjs':
     specifier: ^4.15.0
     version: 4.15.0(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)
+  '@clerk/types':
+    specifier: ^3.35.2
+    version: 3.35.2
   '@ianvs/prettier-plugin-sort-imports':
     specifier: ^3.7.2
     version: 3.7.2(prettier@2.8.6)
@@ -78,6 +81,9 @@ dependencies:
     version: 3.21.4
 
 devDependencies:
+  '@tanstack/eslint-plugin-query':
+    specifier: ^4.29.0
+    version: 4.29.0
   '@types/eslint':
     specifier: ^8.21.3
     version: 8.21.3
@@ -323,7 +329,7 @@ packages:
     resolution: {integrity: sha512-3cA2FDbNv5jK+iqckV+ZbTdz/Eg69mSOUkd8WTgOGj51sYTxOAr0sOhdhudQhdWhIk4H/43523VdwU3FUtFguQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@clerk/types': 3.34.0
+      '@clerk/types': 3.35.2
       '@peculiar/webcrypto': 1.4.1
       '@types/node': 16.18.6
       deepmerge: 4.2.2
@@ -339,7 +345,7 @@ packages:
       react: '>=16'
     dependencies:
       '@clerk/shared': 0.15.2(react@18.2.0)
-      '@clerk/types': 3.34.0
+      '@clerk/types': 3.35.2
       react: 18.2.0
       swr: 1.3.0(react@18.2.0)
       tslib: 2.4.1
@@ -350,7 +356,7 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       '@clerk/backend': 0.16.1
-      '@clerk/types': 3.34.0
+      '@clerk/types': 3.35.2
       '@types/cookies': 0.7.7
       '@types/express': 4.17.14
       '@types/node-fetch': 2.6.2
@@ -371,7 +377,7 @@ packages:
       '@clerk/backend': 0.16.1
       '@clerk/clerk-react': 4.14.2(react@18.2.0)
       '@clerk/clerk-sdk-node': 4.8.2
-      '@clerk/types': 3.34.0
+      '@clerk/types': 3.35.2
       next: 13.2.4(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -386,8 +392,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@clerk/types@3.34.0:
-    resolution: {integrity: sha512-8eA7bhjlIYvciPuAdCH1b1aOBUv+8kQ6Q5uY0eupgrLjmVXYpsbwLrJJDzL0VSJA5ufTDZdJUZps2PcQkYV+5A==}
+  /@clerk/types@3.35.2:
+    resolution: {integrity: sha512-ysd871r4DIeHbqSwVQhH+YYqQx+SWYX+ZbEof9MR4sRKGZtVW65hbRH32WkZpxCYYUoqLO68s38yRkI08lvSJg==}
     engines: {node: '>=14'}
     dependencies:
       csstype: 3.1.1
@@ -945,6 +951,10 @@ packages:
     dependencies:
       tslib: 2.5.0
     dev: false
+
+  /@tanstack/eslint-plugin-query@4.29.0:
+    resolution: {integrity: sha512-ex+rigzAetqW7vjFA0rqszgPHltI0nbNlsFki4+1b9Kg8Tu6gSSl0M8LJGSvjfnOHsDL5ET3lHHWj+dirdfq5w==}
+    dev: true
 
   /@tanstack/query-core@4.27.0:
     resolution: {integrity: sha512-sm+QncWaPmM73IPwFlmWSKPqjdTXZeFf/7aEmWh00z7yl2FjqophPt0dE1EHW9P1giMC5rMviv7OUbSDmWzXXA==}

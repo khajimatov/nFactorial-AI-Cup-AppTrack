@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { type NextPage } from "next";
 import Head from "next/head";
@@ -34,6 +34,8 @@ const Arman: NextPage = () => {
 
   const lastRecording = recordings[recordings.length - 1];
 
+  const chatUIRef = useRef<HTMLDivElement>(null);
+
   function deleteAudios() {
     recordings.forEach((record) => {
       deleteAudio(record.key);
@@ -46,31 +48,50 @@ const Arman: NextPage = () => {
 
   const ctx = api.useContext();
 
-  // const { mutate } = api.example.chat.useMutation({
-  //   onSuccess: () => {
-  //     setInput("");
-  //     void ctx.example.getAll.invalidate();
-  //   },
-  //   onError: (e) => {
-  //     const errorMessage = e.data?.zodError?.fieldErrors.content;
-  //     if (errorMessage && errorMessage[0]) {
-  //       toast.error(errorMessage[0]);
-  //     } else {
-  //       toast.error("Failed to post! Please try again later.");
-  //     }
-  //   },
-  // });
+  const { mutate, data } = api.example.chat.useMutation({
+    onSuccess: () => {
+      if (data) {
+        console.log(data);
+      } else {
+        console.log("no data");
+      }
+      toast.success("Message sent!");
+      // void ctx.example.getAll.invalidate();
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Failed to post! Please try again later.");
+      }
+    },
+  });
+
   // const { data } = api.example.getAll.useQuery(
   //   { userId: user?.id ? user.id : "" },
   //   { enabled: isLoaded && user?.id !== undefined, refetchOnWindowFocus: false }
   // );
+
   function handleSubmit() {
     if (input.trim() === "") {
       toast.error("Please enter a message");
     } else {
-      // mutate({ content: input });
+      setInput("");
+      mutate({ content: input });
     }
   }
+  const [yep2, setYep2] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [isLoaded]);
+
+  useEffect(() => {
+    chatUIRef.current?.scrollTo({
+      top: chatUIRef.current.scrollHeight,
+      behavior: "smooth",
+    })
+  }, [yep2]);
 
   return (
     <>
@@ -84,11 +105,14 @@ const Arman: NextPage = () => {
           padding-bottom: 0;
         }
       `}</style>
-      <Nav />
+      <Nav user={user} isSignedIn={isSignedIn} />
       {isSignedIn ? (
         <div className="flex flex-col gap-2 w-[700px] max-h-screen h-screen mx-auto mt-10 py-4">
-          <div className="flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg">
-            <div className="flex items-center gap-4 w-full px-4 py-4 backdrop-blur-sm bg-slate-200 text-black font-medium border-[#f5f5f5] border-b-2 sticky top-0">
+          <div
+            ref={chatUIRef}
+            className="flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg"
+          >
+            <div className="flex items-center gap-4 w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#f5f5f5] border-b-2 sticky top-0">
               <Image
                 className="w-[40px] h-[40px] rounded-full shadow"
                 src={armanPFP}
@@ -98,40 +122,23 @@ const Arman: NextPage = () => {
               />
               Arman
             </div>
-            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(even)]:self-start p-2">
+            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(odd)]:rounded-br-[4px] [&>*:nth-child(odd)]:bg-sky-500 [&>*:nth-child(odd)]:text-white [&>*:nth-child(even)]:self-start [&>*:nth-child(even)]:rounded-bl-[4px] [&>*:nth-child(even)]:bg-slate-300 p-2">
               <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                activate roast mode
+                activate roast mode plz
               </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl bg-slate-300">
+              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
                 roast mode activated 🔥
               </div>
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
+              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
                 Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
               </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl bg-slate-300">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl bg-slate-300">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl bg-slate-300">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl bg-slate-300">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
-              </div>
+              {yep2.map((y) => {
+                return (
+                  <div key={y} className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
+                    Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
+                  </div>
+                );
+              })}
             </div>
             {/* {data?.map((message) => (
               <div key={message.id}>
@@ -164,7 +171,9 @@ const Arman: NextPage = () => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  handleSubmit();
+                  setInput("");
+                  setYep2([...yep2, 1]);
+                  // handleSubmit();
                 }
               }}
               onChange={(e) => setInput(e.target.value)}

@@ -2,9 +2,10 @@ import React from "react";
 
 import Link from "next/link";
 
-import { SignInButton, useUser, useAuth } from "@clerk/nextjs";
+import { SignInButton, useAuth } from "@clerk/nextjs";
+import { type UserResource } from "@clerk/types";
 import { toast } from "react-hot-toast";
-import PersonaLogo from "~/img/persona";
+import PersonaLogo from "~/assets/svg/persona-logo";
 
 import { cn } from "~/lib/utils";
 
@@ -42,8 +43,13 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
 );
 ListItem.displayName = "ListItem";
 
-const Nav = () => {
-  const { user, isSignedIn } = useUser();
+const Nav = ({
+  user,
+  isSignedIn,
+}: {
+  user: UserResource | null | undefined;
+  isSignedIn: boolean | undefined;
+}) => {
   const { signOut } = useAuth();
   if (isSignedIn && !user) {
     return null;

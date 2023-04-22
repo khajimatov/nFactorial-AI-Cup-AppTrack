@@ -12,6 +12,8 @@
 
 body {
   background-color: #f5f5f5;
+  background-image: url("/a.svg");
+  background-size: auto;
   padding: 1rem;
 }
 .command-gif {
@@ -44,22 +46,4 @@ body {
   transition-timing-function: ease;
   transition-delay: 0s;
 }
-.lines-papa {
-  width: 100%;
-  height: 100%;
-  padding-top: 10px;
-  left: 0;
-  top: 0;
-  position: absolute;
-  display: flex;
-  opacity: 75%;
-  z-index: -1;
-}
-.lines {
-  background-image: url("/vector.svg");
-  width: 1px;
-  height: 100%;
-  margin-left: 10%;
-  background-repeat: repeat-y;
-  background-size: 100%;
-}
+
