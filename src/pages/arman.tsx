@@ -19,10 +19,68 @@ import { Input } from "~/components/input";
 
 import armanPFP from "../../public/arma-pfp.jpg";
 
+type Message = {
+  content: string;
+  sender: "user" | "system";
+};
+const initialMessages: Message[] = [
+  {
+    content:
+      "Hi there! I'm Arman, the creator of this website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "system",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+  {
+    content:
+      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
+    sender: "user",
+  },
+];
+
 const Arman: NextPage = () => {
   const { user, isSignedIn, isLoaded } = useUser();
 
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
 
   const { recorderState, ...handlers }: UseRecorder = useRecorder();
   const { audio } = recorderState;
@@ -78,10 +136,10 @@ const Arman: NextPage = () => {
       toast.error("Please enter a message");
     } else {
       setInput("");
-      mutate({ content: input });
+      setMessages((prev) => [...prev, { content: input, sender: "user" }]);
+      // mutate({ content: input });
     }
   }
-  const [yep2, setYep2] = useState<number[]>([]);
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   }, [isLoaded]);
@@ -91,7 +149,7 @@ const Arman: NextPage = () => {
       top: chatUIRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [isLoaded, yep2]);
+  }, [isLoaded, messages]);
 
   return (
     <>
@@ -110,29 +168,26 @@ const Arman: NextPage = () => {
         <div className="flex flex-col gap-2 w-[700px] max-h-screen h-screen mx-auto mt-10 py-4">
           <div
             ref={chatUIRef}
-            className="flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg"
+            className="scrolly flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg"
           >
-            <div className="flex items-center gap-4 w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#f5f5f5] border-b-2 sticky top-0">
-              <Image
-                className="w-[40px] h-[40px] rounded-full shadow"
-                src={armanPFP}
-                alt="Arman Suleimenov"
-                width={40}
-                height={40}
-              />
-              Arman
+              <div className="flex items-center gap-4 w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#fff] border-b-2 sticky top-0">
+                <Image
+                  className="w-[40px] h-[40px] rounded-full shadow"
+                  src={armanPFP}
+                  alt="Arman Suleimenov"
+                  width={40}
+                  height={40}
+                />
+                Arman
             </div>
             <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(odd)]:rounded-br-[4px] [&>*:nth-child(odd)]:bg-sky-500 [&>*:nth-child(odd)]:text-white [&>*:nth-child(even)]:self-start [&>*:nth-child(even)]:rounded-bl-[4px] [&>*:nth-child(even)]:bg-slate-300 p-2">
-              <div className="max-w-[500px] break-words py-2 px-4 w-fit rounded-2xl bg-sky-500 text-white">
-                activate roast mode plz
-              </div>
-              <div className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
-                roast mode activated 🔥
-              </div>
-              {yep2.map((y) => {
+              {messages.map((m, index) => {
                 return (
-                  <div key={y} className="py-2 px-4 w-fit max-w-[500px] rounded-2xl">
-                    Hey Arman, I am a big fan of your work. I was wondering if you could roast me?
+                  <div
+                    key={index}
+                    className="py-2 px-4 w-fit max-w-[500px] rounded-2xl animate-slideup"
+                  >
+                    {m.content}
                   </div>
                 );
               })}
@@ -168,14 +223,14 @@ const Arman: NextPage = () => {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  setYep2(yep2);
-                  // handleSubmit();
+                  handleSubmit();
                 }
               }}
               onChange={(e) => setInput(e.target.value)}
               value={input}
               type="text"
               name="prompt"
+              autoFocus
               disabled={initRecording || recordings.length > 0}
               placeholder={
                 recordings.length > 0 ? "Click send to send voice message" : "Type your message..."
@@ -220,24 +275,18 @@ const Arman: NextPage = () => {
                   width="24px"
                   height="24px"
                   viewBox="0 0 24 24"
-                  strokeWidth="1.5"
+                  stroke-width="1.5"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  color="#fff"
                 >
-                  <g
-                    clipPath="url(#send-diagonal_svg__clip0_2476_13290)"
+                  <path
+                    d="M22 12L3 20l3.563-8L3 4l19 8zM6.5 12H22"
                     stroke="#fff"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                  >
-                    <path d="M22.152 3.553L11.178 21.004l-1.67-8.596L2 7.898l20.152-4.345zM9.456 12.444l12.696-8.89"></path>
-                  </g>
-                  <defs>
-                    <clipPath id="send-diagonal_svg__clip0_2476_13290">
-                      <path fill="#fff" d="M0 0h24v24H0z"></path>
-                    </clipPath>
-                  </defs>
+                  ></path>
                 </svg>
               </Button>
             </div>

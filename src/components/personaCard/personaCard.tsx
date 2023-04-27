@@ -22,10 +22,10 @@ const PersonaCard = ({ isSignedIn }: { isSignedIn: boolean | undefined }) => {
   }, []);
   return (
     <>
-      <div className="max-w-sm bg-white w-[300px] border border-gray-200 rounded-lg shadow">
+      <div className="max-w-sm w-[300px] rounded-lg shadow border border-slate-200 overflow-hidden">
         <div className="w-[300px]">
           <Image
-            className="rounded-t-lg w-full h-[200px] object-cover object-center"
+            className="w-full h-[200px] object-cover object-center"
             src={armanPic}
             alt="Arman Suleimenov"
             width={300}

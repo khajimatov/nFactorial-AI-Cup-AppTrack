@@ -6,7 +6,7 @@ export type OpenAIPayload = {
     content: string;
   }[];
 };
-export interface OpenAIResponse {
+export type OpenAIResponse = {
   id: string;
   object: string;
   created: number;
@@ -16,12 +16,14 @@ export interface OpenAIResponse {
     completion_tokens: number;
     total_tokens: number;
   };
-  choices: [{
-    message: {
-      role: string;
-      content: string;
-    };
-    index: number;
-    finish_reason: string;
-  }];
-}
+  choices: [
+    {
+      message: {
+        role: string;
+        content: string;
+      };
+      index: number;
+      finish_reason: string;
+    }
+  ];
+};

@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "lint": "next lint",
+    "lint": "next lint --report-unused-disable-directives warn",
     "start": "next start"
   },
   "dependencies": {
