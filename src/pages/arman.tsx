@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 
 import { useUser } from "@clerk/nextjs";
+import { Wand2, MoreVertical } from "lucide-react";
 import { toast } from "react-hot-toast";
 import useRecorder from "~/hooks/use-recorder";
 import useRecordingsList from "~/hooks/use-recordings-list";
@@ -16,6 +17,16 @@ import { type UseRecorder } from "~/types/recorder";
 import Nav from "~/components/Nav";
 import { Button } from "~/components/button";
 import { Input } from "~/components/input";
+import { Label } from "~/components/label";
+import { Popover, PopoverContent, PopoverTrigger, PopoverArrow } from "~/components/popover";
+import { Switch } from "~/components/switch";
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/tooltip";
 
 import armanPFP from "../../public/arma-pfp.jpg";
 
@@ -80,6 +91,7 @@ const Arman: NextPage = () => {
   const { user, isSignedIn, isLoaded } = useUser();
 
   const [input, setInput] = useState("");
+  const [isRoastMode, setIsRoastMode] = useState(true);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
 
   const { recorderState, ...handlers }: UseRecorder = useRecorder();
@@ -93,6 +105,7 @@ const Arman: NextPage = () => {
   const lastRecording = recordings[recordings.length - 1];
 
   const chatUIRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   function deleteAudios() {
     recordings.forEach((record) => {
@@ -137,6 +150,9 @@ const Arman: NextPage = () => {
     } else {
       setInput("");
       setMessages((prev) => [...prev, { content: input, sender: "user" }]);
+        audioRef.current.volume = 0.3;
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
       // mutate({ content: input });
     }
   }
@@ -156,7 +172,7 @@ const Arman: NextPage = () => {
       <Head>
         <title>Chat with Arman</title>
         <meta name="description" content="Chat with Arman" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={armanPFP.src} />
       </Head>
       <style jsx global>{`
         body {
@@ -166,11 +182,19 @@ const Arman: NextPage = () => {
       <Nav user={user} isSignedIn={isSignedIn} />
       {isSignedIn ? (
         <div className="flex flex-col gap-2 w-[700px] max-h-screen h-screen mx-auto mt-10 py-4">
+          {/* hidden audio */}
+          <audio
+            ref={audioRef}
+            id="audio"
+            className="hidden"
+            src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"
+          ></audio>
           <div
             ref={chatUIRef}
             className="scrolly flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg"
           >
-              <div className="flex items-center gap-4 w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#fff] border-b-2 sticky top-0">
+            <div className="flex items-center justify-between w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#f8f8f8] border-b-2 sticky top-0">
+              <div className="flex items-center gap-4">
                 <Image
                   className="w-[40px] h-[40px] rounded-full shadow"
                   src={armanPFP}
@@ -179,8 +203,59 @@ const Arman: NextPage = () => {
                   height={40}
                 />
                 Arman
+              </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" className="w-10 rounded-full p-0">
+                    <MoreVertical className="h-4 w-4" />
+                    <span className="sr-only">Open chat settings popover</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-70 bg-white">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <div className="flex gap-2 items-center">
+                        <h4 className="font-medium leading-none">Chat settings</h4>
+                        <Wand2 size={16} color="hsla(var(--popover-foreground))" />
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Customize your chat experience
+                      </p>
+                    </div>
+                    <TooltipProvider delayDuration={300}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center space-x-2">
+                            <Switch id="roast-mode" disabled checked={isRoastMode} />
+                            <Label htmlFor="roast-mode">Roast Mode</Label>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <TooltipArrow
+                            fill="white"
+                            strokeWidth="1px"
+                            stroke="hsl(var(--border))"
+                          />
+                          Roast mode is temporarily enabled by default
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="vc-simulator-mode"
+                        checked={!isRoastMode}
+                        onCheckedChange={() => {
+                          setIsRoastMode((prev) => !prev);
+                        }}
+                      />
+                      <Label htmlFor="vc-simulator-mode">VC Simulator Mode</Label>
+                    </div>
+                  </div>
+                  <PopoverArrow fill="white" />
+                </PopoverContent>
+              </Popover>
             </div>
-            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(odd)]:rounded-br-[4px] [&>*:nth-child(odd)]:bg-sky-500 [&>*:nth-child(odd)]:text-white [&>*:nth-child(even)]:self-start [&>*:nth-child(even)]:rounded-bl-[4px] [&>*:nth-child(even)]:bg-slate-300 p-2">
+            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(odd)]:rounded-br-[2px] [&>*:nth-child(odd)]:bg-sky-500 [&>*:nth-child(odd)]:text-white [&>*:nth-child(even)]:self-start [&>*:nth-child(even)]:rounded-bl-[2px] [&>*:nth-child(even)]:bg-slate-300 p-2">
               {messages.map((m, index) => {
                 return (
                   <div
@@ -194,10 +269,10 @@ const Arman: NextPage = () => {
             </div>
             {/* {data?.map((message) => (
               <div key={message.id}>
-                Me:{message.content}
-                <br />
-                Arman:{message.system}
-                <hr />
+              Me:{message.content}
+              <br />
+              Arman:{message.system}
+              <hr />
               </div>
             ))} */}
           </div>
@@ -293,18 +368,18 @@ const Arman: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center">
-          <p className="leading-7 text-center mt-16">
-            Sign in to chat with
+        <div className="flex flex-col items-center justify-center gap-2">
+          <p className="leading-7 text-center mt-16">Sign in to chat with</p>
+          <div className="flex items-center gap-2">
             <Image
               className="rounded-full inline"
               src={armanPFP}
               alt="Arman Suleimenov"
-              width={40}
-              height={40}
+              width={38}
+              height={38}
             />
             Arman
-          </p>
+          </div>
         </div>
       )}
     </>

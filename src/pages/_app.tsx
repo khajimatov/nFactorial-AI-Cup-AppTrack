@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import "~/styles/custom.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,0 +1,58 @@
+.cl-internal-b3fm6y {
+  opacity: 0;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  background-image: url("/a.svg");
+  background-size: auto;
+  padding: 1rem;
+}
+.command-gif {
+  position: absolute;
+  -webkit-transform: rotate(-20deg);
+  transform: rotate(-20deg);
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  mix-blend-mode: darken;
+  top: 25%;
+}
+.face-gif {
+  position: absolute;
+  -webkit-transform: rotate(20deg);
+  transform: rotate(20deg);
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  mix-blend-mode: darken;
+  top: 25%;
+}
+.title:hover {
+  transform: scale(1.04);
+  transition: all 0.3s ease 0s;
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+}
+
+.scrolly::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.scrolly::-webkit-scrollbar-track {
+  background: #f8f8f8;
+}
+.scrolly::-webkit-scrollbar-thumb {
+  background: #CBD5E1dd;
+}
+.scrolly {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1dd #f8f8f8;
+}
