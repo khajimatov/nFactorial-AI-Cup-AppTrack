@@ -89,6 +89,7 @@ const initialMessages: Message[] = [
 
 const Arman: NextPage = () => {
   const { user, isSignedIn, isLoaded } = useUser();
+  console.log("d");
 
   const [input, setInput] = useState("");
   const [isRoastMode, setIsRoastMode] = useState(true);
@@ -105,7 +106,7 @@ const Arman: NextPage = () => {
   const lastRecording = recordings[recordings.length - 1];
 
   const chatUIRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const sendSoundEffect = useRef<HTMLAudioElement>(null);
 
   function deleteAudios() {
     recordings.forEach((record) => {
@@ -150,12 +151,19 @@ const Arman: NextPage = () => {
     } else {
       setInput("");
       setMessages((prev) => [...prev, { content: input, sender: "user" }]);
-      if (audioRef.current) {
-        audioRef.current.volume = 0.3;
-        audioRef.current.currentTime = 0;
-        void audioRef.current.play();
-      }
+      fireSendSoundEffect();
       // mutate({ content: input });
+    }
+  }
+  function fireSendSoundEffect() {
+    if (sendSoundEffect.current) {
+      if (sendSoundEffect.current.paused) {
+        sendSoundEffect.current.currentTime = 0;
+      }
+      sendSoundEffect.current.pause();
+      sendSoundEffect.current.currentTime = 0;
+      sendSoundEffect.current.volume = 0.3;
+      void sendSoundEffect.current.play();
     }
   }
   useEffect(() => {
@@ -184,11 +192,8 @@ const Arman: NextPage = () => {
       <Nav user={user} isSignedIn={isSignedIn} />
       {isSignedIn ? (
         <div className="flex flex-col gap-2 w-[700px] max-h-screen h-screen mx-auto mt-10 py-4">
-          {/* hidden audio */}
           <audio
-            ref={audioRef}
-            id="audio"
-            className="hidden"
+            ref={sendSoundEffect}
             src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"
           ></audio>
           <div
