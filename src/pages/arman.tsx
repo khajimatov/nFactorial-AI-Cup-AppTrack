@@ -150,9 +150,11 @@ const Arman: NextPage = () => {
     } else {
       setInput("");
       setMessages((prev) => [...prev, { content: input, sender: "user" }]);
+      if (audioRef.current) {
         audioRef.current.volume = 0.3;
         audioRef.current.currentTime = 0;
-        audioRef.current.play();
+        void audioRef.current.play();
+      }
       // mutate({ content: input });
     }
   }
