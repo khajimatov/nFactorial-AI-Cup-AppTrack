@@ -32,68 +32,15 @@ import armanPFP from "../../public/arma-pfp.jpg";
 
 type Message = {
   content: string;
-  sender: "user" | "system";
+  role: "user" | "assistant";
 };
-const initialMessages: Message[] = [
-  {
-    content:
-      "Hi there! I'm Arman, the creator of this website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "system",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-  {
-    content:
-      "Hi Arman! I'm a user of your website. I'm a full-stack developer and I love to build things. I'm currently working on a few projects, including this website. I'm also a huge fan of the web and I love to learn new things. I'm currently learning about web audio and I'm having a lot of fun with it. I hope you enjoy this website and I hope you have a great day!",
-    sender: "user",
-  },
-];
 
 const Arman: NextPage = () => {
   const { user, isSignedIn, isLoaded } = useUser();
-  console.log("d");
 
   const [input, setInput] = useState("");
   const [isRoastMode, setIsRoastMode] = useState(true);
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const { recorderState, ...handlers }: UseRecorder = useRecorder();
   const { audio } = recorderState;
@@ -120,15 +67,12 @@ const Arman: NextPage = () => {
 
   const ctx = api.useContext();
 
-  const { mutate, data } = api.example.chat.useMutation({
-    onSuccess: () => {
-      if (data) {
-        console.log(data);
-      } else {
-        console.log("no data");
-      }
-      toast.success("Message sent!");
-      // void ctx.example.getAll.invalidate();
+  const { mutate, isLoading: isMutationLoading } = api.example.chat.useMutation({
+    onSuccess(data) {
+      if (typeof data === "string") {
+      fireSendSoundEffect();
+      setMessages((prev) => [...prev, { content: data, role: "assistant" }]);
+    }
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors.content;
@@ -150,9 +94,9 @@ const Arman: NextPage = () => {
       toast.error("Please enter a message");
     } else {
       setInput("");
-      setMessages((prev) => [...prev, { content: input, sender: "user" }]);
       fireSendSoundEffect();
-      // mutate({ content: input });
+      setMessages((prev) => [...prev, { content: input, role: "user" }]);
+      // mutate(messages.concat({ content: input, role: "user" }));
     }
   }
   function fireSendSoundEffect() {
@@ -162,7 +106,7 @@ const Arman: NextPage = () => {
       }
       sendSoundEffect.current.pause();
       sendSoundEffect.current.currentTime = 0;
-      sendSoundEffect.current.volume = 0.3;
+      sendSoundEffect.current.volume = 0.2;
       void sendSoundEffect.current.play();
     }
   }
@@ -274,14 +218,6 @@ const Arman: NextPage = () => {
                 );
               })}
             </div>
-            {/* {data?.map((message) => (
-              <div key={message.id}>
-              Me:{message.content}
-              <br />
-              Arman:{message.system}
-              <hr />
-              </div>
-            ))} */}
           </div>
           {initRecording && (
             <>
@@ -303,7 +239,7 @@ const Arman: NextPage = () => {
           <div className="flex justify-center gap-2">
             <Input
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !isMutationLoading) {
                   e.preventDefault();
                   handleSubmit();
                 }
@@ -315,7 +251,7 @@ const Arman: NextPage = () => {
               autoFocus
               disabled={initRecording || recordings.length > 0}
               placeholder={
-                recordings.length > 0 ? "Click send to send voice message" : "Type your message..."
+                recordings.length > 0 ? "Click the button to send voice message" : "Type your message..."
               }
             />
             <div>
@@ -352,12 +288,12 @@ const Arman: NextPage = () => {
               </Button>
             </div>
             <div>
-              <Button onClick={handleSubmit}>
+              <Button onClick={handleSubmit} disabled={isMutationLoading}>
                 <svg
                   width="24px"
                   height="24px"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   color="#fff"

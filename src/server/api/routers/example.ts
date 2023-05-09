@@ -4,6 +4,11 @@ import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/ap
 
 import { type OpenAIResponse, type OpenAIPayload } from "~/types/openai";
 
+const Message = z.object({
+  content: z.string(),
+  role: z.enum(["user", "assistant"]),
+});
+
 export const exampleRouter = createTRPCRouter({
   getAll: privateProcedure
     .input(
@@ -42,51 +47,46 @@ export const exampleRouter = createTRPCRouter({
       return post;
     }),
 
-  chat: privateProcedure
-    .input(
-      z.object({
-        content: z.string(),
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      if (!process.env.OPENAI_API_KEY) {
-        throw new Error("Missing OPENAI_API_KEY");
-      }
+  chat: privateProcedure.input(z.array(Message)).mutation(async ({ ctx, input }) => {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("Missing OPENAI_API_KEY");
+    }
 
-      if (!input.content) {
-        return new Response("No prompt in the request", { status: 400 });
-      }
+    if (!input.length) {
+      return new Response("No prompt in the request", { status: 400 });
+    }
 
-      const payload: OpenAIPayload = {
-        model: "gpt-3.5-turbo",
-        max_tokens: 50,
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a trashtalker, joker, roasting VC and founder of successful startups. Your name is Arman Suleimenov",
-          },
-          { role: "user", content: input.content },
-        ],
-      };
+    const messages = [
+      {
+        role: "system",
+        content:
+          "You are a trashtalker, joker, roasting VC and founder of successful startups. Your name is Arman Suleimenov",
+      },
+    ].concat(input);
 
-      const res = (await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify(payload),
-      }).then((res) => res.json())) as OpenAIResponse;
+    const payload: OpenAIPayload = {
+      model: "gpt-3.5-turbo",
+      max_tokens: 50,
+      messages,
+    };
 
-      const systemMessage = res.choices[0].message.content;
-      // await ctx.prisma.chat.create({
-      //   data: {
-      //     authorId: ctx.userId,
-      //     content: input.content,
-      //     system: system,
-      //   },
-      // });
-      return systemMessage;
-    }),
+    const res = (await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify(payload),
+    }).then((res) => res.json())) as OpenAIResponse;
+
+    const systemMessage = res.choices[0].message.content;
+    // await ctx.prisma.chat.create({
+    //   data: {
+    //     authorId: ctx.userId,
+    //     content: input.content,
+    //     system: system,
+    //   },
+    // });
+    return systemMessage;
+  }),
 });
