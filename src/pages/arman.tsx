@@ -119,11 +119,11 @@ const Arman: NextPage = () => {
   }
   ``;
   useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
     chatUIRef.current?.scrollTo({
       top: chatUIRef.current.scrollHeight,
       behavior: "smooth",
     });
+    window.scrollTo(0, document.body.scrollHeight);
   }, [isUserLoaded, messages]);
 
   useEffect(() => {
