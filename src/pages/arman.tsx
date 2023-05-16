@@ -61,6 +61,7 @@ const Arman: NextPage = () => {
 
   const chatUIRef = useRef<HTMLDivElement>(null);
   const sendSoundEffect = useRef<HTMLAudioElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function deleteAudios() {
     recordings.forEach((record) => {
@@ -101,6 +102,7 @@ const Arman: NextPage = () => {
       toast.error("Please enter a message");
     } else {
       setInput("");
+      inputRef.current?.blur();
       fireSendSoundEffect();
       setMessages((prev) => [...prev, { content: input, role: "user" }]);
       mutate(messages.concat({ content: input, role: "user" }));
@@ -251,6 +253,7 @@ const Arman: NextPage = () => {
             )}
             <div className="flex justify-center gap-2">
               <Input
+                ref={inputRef}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !isMutationLoading) {
                     e.preventDefault();
