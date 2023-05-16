@@ -260,6 +260,7 @@ const Arman: NextPage = () => {
                 onChange={(e) => setInput(e.target.value)}
                 value={input}
                 type="text"
+                inputMode="text"
                 name="prompt"
                 autoFocus
                 disabled={initRecording || recordings.length > 0}
