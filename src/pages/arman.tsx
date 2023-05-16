@@ -145,201 +145,201 @@ const Arman: NextPage = () => {
           padding-bottom: 0;
         }
       `}</style>
-      <Nav user={user} isSignedIn={isSignedIn} />
-      {isSignedIn ? (
-        <div className="flex flex-col gap-2 w-screen sm:w-[700px] max-h-screen h-[100svh] mx-auto mt-10 py-4">
-          <audio
-            ref={sendSoundEffect}
-            preload="auto"
-            src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"
-          ></audio>
-          <div
-            ref={chatUIRef}
-            className="scrolly flex flex-col overflow-auto h-full w-[700px] bg-slate-200 rounded-lg"
-          >
-            <div className="flex items-center justify-between w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#f8f8f8] border-b-2 sticky top-0">
-              <div className="flex items-center gap-4">
-                <Image
-                  className="w-[40px] h-[40px] rounded-full shadow"
-                  src={armanPFP}
-                  alt="Arman Suleimenov"
-                  width={40}
-                  height={40}
-                />
-                Arman
-              </div>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="ghost" className="w-10 rounded-full p-0">
-                    <MoreVertical className="h-4 w-4" />
-                    <span className="sr-only">Open chat settings popover</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-70 bg-white">
-                  <div className="grid gap-4">
-                    <div className="space-y-2">
-                      <div className="flex gap-2 items-center">
-                        <h4 className="font-medium leading-none">Chat settings</h4>
-                        <Wand2 size={16} color="hsla(var(--popover-foreground))" />
+        <Nav user={user} isSignedIn={isSignedIn} />
+        {isSignedIn ? (
+          <div className="flex flex-col gap-2 w-full sm:w-[700px] max-h-screen h-screen mx-auto mt-6 py-4">
+            <audio
+              ref={sendSoundEffect}
+              preload="auto"
+              src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"
+            ></audio>
+            <div
+              ref={chatUIRef}
+              className="scrolly flex flex-col overflow-auto w-full h-full sm:w-[700px] bg-slate-200 rounded-lg"
+            >
+              <div className="flex items-center justify-between w-full px-4 py-4 backdrop-blur-sm backdrop-saturate-[180%] bg-slate-200/80 text-black font-medium border-[#f8f8f8] border-b-2 sticky top-0">
+                <div className="flex items-center gap-4">
+                  <Image
+                    className="w-[40px] h-[40px] rounded-full shadow"
+                    src={armanPFP}
+                    alt="Arman Suleimenov"
+                    width={40}
+                    height={40}
+                  />
+                  Arman
+                </div>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" className="w-10 rounded-full p-0">
+                      <MoreVertical className="h-4 w-4" />
+                      <span className="sr-only">Open chat settings popover</span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-70 bg-white">
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <div className="flex gap-2 items-center">
+                          <h4 className="font-medium leading-none">Chat settings</h4>
+                          <Wand2 size={16} color="hsla(var(--popover-foreground))" />
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          Customize your chat experience
+                        </p>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        Customize your chat experience
-                      </p>
+                      <TooltipProvider delayDuration={300}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center space-x-2">
+                              <Switch id="roast-mode" disabled checked={isRoastMode} />
+                              <Label htmlFor="roast-mode">Roast Mode</Label>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <TooltipArrow
+                              fill="white"
+                              strokeWidth="1px"
+                              stroke="hsl(var(--border))"
+                            />
+                            Roast mode is temporarily enabled by default
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="vc-simulator-mode"
+                          checked={!isRoastMode}
+                          onCheckedChange={() => {
+                            setIsRoastMode((prev) => !prev);
+                          }}
+                        />
+                        <Label htmlFor="vc-simulator-mode">VC Simulator Mode</Label>
+                      </div>
                     </div>
-                    <TooltipProvider delayDuration={300}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div className="flex items-center space-x-2">
-                            <Switch id="roast-mode" disabled checked={isRoastMode} />
-                            <Label htmlFor="roast-mode">Roast Mode</Label>
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <TooltipArrow
-                            fill="white"
-                            strokeWidth="1px"
-                            stroke="hsl(var(--border))"
-                          />
-                          Roast mode is temporarily enabled by default
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="vc-simulator-mode"
-                        checked={!isRoastMode}
-                        onCheckedChange={() => {
-                          setIsRoastMode((prev) => !prev);
-                        }}
-                      />
-                      <Label htmlFor="vc-simulator-mode">VC Simulator Mode</Label>
+                    <PopoverArrow fill="white" />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(even)]:self-end [&>*:nth-child(even)]:rounded-br-[2px] [&>*:nth-child(even)]:bg-sky-500 [&>*:nth-child(even)]:text-white [&>*:nth-child(odd)]:self-start [&>*:nth-child(odd)]:rounded-bl-[2px] [&>*:nth-child(odd)]:bg-slate-300 p-2">
+                {messages.map((m, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="py-2 px-4 w-fit max-w-[500px] rounded-2xl animate-slideup"
+                    >
+                      {m.content}
                     </div>
-                  </div>
-                  <PopoverArrow fill="white" />
-                </PopoverContent>
-              </Popover>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(even)]:self-end [&>*:nth-child(even)]:rounded-br-[2px] [&>*:nth-child(even)]:bg-sky-500 [&>*:nth-child(even)]:text-white [&>*:nth-child(odd)]:self-start [&>*:nth-child(odd)]:rounded-bl-[2px] [&>*:nth-child(odd)]:bg-slate-300 p-2">
-              {messages.map((m, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="py-2 px-4 w-fit max-w-[500px] rounded-2xl animate-slideup"
-                  >
-                    {m.content}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          {initRecording && (
-            <>
-              Recording: {formatMinutes(recordingMinutes)}:{formatSeconds(recordingSeconds)}
-            </>
-          )}
-          {!initRecording && recordings.length > 0 && (
-            <div className="flex gap-2">
-              <audio controls src={lastRecording?.audio} />
-              <Button
-                className="border-red-200 text-red-500"
-                variant="outline"
-                onClick={deleteAudios}
-              >
-                Delete
-              </Button>
-            </div>
-          )}
-          <div className="flex justify-center gap-2">
-            <Input
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !isMutationLoading) {
-                  e.preventDefault();
-                  handleSubmit();
+            {initRecording && (
+              <>
+                Recording: {formatMinutes(recordingMinutes)}:{formatSeconds(recordingSeconds)}
+              </>
+            )}
+            {!initRecording && recordings.length > 0 && (
+              <div className="flex gap-2">
+                <audio controls src={lastRecording?.audio} />
+                <Button
+                  className="border-red-200 text-red-500"
+                  variant="outline"
+                  onClick={deleteAudios}
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
+            <div className="flex justify-center gap-2">
+              <Input
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !isMutationLoading) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+                onChange={(e) => setInput(e.target.value)}
+                value={input}
+                type="text"
+                name="prompt"
+                autoFocus
+                disabled={initRecording || recordings.length > 0}
+                placeholder={
+                  recordings.length > 0
+                    ? "Click the button to send voice message"
+                    : "Type your message..."
                 }
-              }}
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-              type="text"
-              name="prompt"
-              autoFocus
-              disabled={initRecording || recordings.length > 0}
-              placeholder={
-                recordings.length > 0
-                  ? "Click the button to send voice message"
-                  : "Type your message..."
-              }
-            />
-            <div>
-              <Button
-                variant={initRecording ? "destructive" : "outline"}
-                onClick={initRecording ? saveRecording : startThatRecording}
-              >
-                <svg
-                  width="24px"
-                  height="24px"
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  color="#FFF"
+              />
+              <div>
+                <Button
+                  variant={initRecording ? "destructive" : "outline"}
+                  onClick={initRecording ? saveRecording : startThatRecording}
                 >
-                  <rect
-                    x="9"
-                    y="2"
-                    width="6"
-                    height="12"
-                    rx="3"
-                    stroke="#000000"
+                  <svg
+                    width="24px"
+                    height="24px"
                     strokeWidth="1.5"
-                  ></rect>
-                  <path
-                    d="M5 10v1a7 7 0 007 7v0a7 7 0 007-7v-1M12 18v4m0 0H9m3 0h3"
-                    stroke="#000000"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="#FFF"
+                  >
+                    <rect
+                      x="9"
+                      y="2"
+                      width="6"
+                      height="12"
+                      rx="3"
+                      stroke="#000000"
+                      strokeWidth="1.5"
+                    ></rect>
+                    <path
+                      d="M5 10v1a7 7 0 007 7v0a7 7 0 007-7v-1M12 18v4m0 0H9m3 0h3"
+                      stroke="#000000"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                </Button>
+              </div>
+              <div>
+                <Button onClick={handleSubmit} disabled={isMutationLoading}>
+                  <svg
+                    width="24px"
+                    height="24px"
+                    viewBox="0 0 24 24"
                     strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-              </Button>
-            </div>
-            <div>
-              <Button onClick={handleSubmit} disabled={isMutationLoading}>
-                <svg
-                  width="24px"
-                  height="24px"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  color="#fff"
-                >
-                  <path
-                    d="M22 12L3 20l3.563-8L3 4l19 8zM6.5 12H22"
-                    stroke="#fff"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-              </Button>
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="#fff"
+                  >
+                    <path
+                      d="M22 12L3 20l3.563-8L3 4l19 8zM6.5 12H22"
+                      stroke="#fff"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center gap-2">
-          <p className="leading-7 text-center mt-16">Sign in to chat with</p>
-          <div className="flex items-center gap-2">
-            <Image
-              className="rounded-full inline"
-              src={armanPFP}
-              alt="Arman Suleimenov"
-              width={38}
-              height={38}
-            />
-            Arman
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-2">
+            <p className="leading-7 text-center mt-16">Sign in to chat with</p>
+            <div className="flex items-center gap-2">
+              <Image
+                className="rounded-full inline"
+                src={armanPFP}
+                alt="Arman Suleimenov"
+                width={38}
+                height={38}
+              />
+              Arman
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
