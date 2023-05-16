@@ -50,9 +50,9 @@ body {
   background: #f8f8f8;
 }
 .scrolly::-webkit-scrollbar-thumb {
-  background: #CBD5E1dd;
+  background: #cbd5e1dd;
 }
 .scrolly {
   scrollbar-width: thin;
-  scrollbar-color: #CBD5E1dd #f8f8f8;
+  scrollbar-color: #cbd5e1dd #f8f8f8;
 }

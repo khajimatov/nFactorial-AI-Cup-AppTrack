@@ -35,8 +35,15 @@ type Message = {
   role: "user" | "assistant";
 };
 
+const initialMessages: Message[] = [
+  {
+    content: "Sup, It's Arman, I'm here to roast you",
+    role: "assistant",
+  },
+];
+
 const Arman: NextPage = () => {
-  const { user, isSignedIn, isLoaded } = useUser();
+  const { user, isSignedIn, isLoaded: isUserLoaded } = useUser();
 
   const [input, setInput] = useState("");
   const [isRoastMode, setIsRoastMode] = useState(true);
@@ -70,9 +77,9 @@ const Arman: NextPage = () => {
   const { mutate, isLoading: isMutationLoading } = api.example.chat.useMutation({
     onSuccess(data) {
       if (typeof data === "string") {
-      fireSendSoundEffect();
-      setMessages((prev) => [...prev, { content: data, role: "assistant" }]);
-    }
+        fireSendSoundEffect();
+        setMessages((prev) => [...prev, { content: data, role: "assistant" }]);
+      }
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors.content;
@@ -86,7 +93,7 @@ const Arman: NextPage = () => {
 
   // const { data } = api.example.getAll.useQuery(
   //   { userId: user?.id ? user.id : "" },
-  //   { enabled: isLoaded && user?.id !== undefined, refetchOnWindowFocus: false }
+  //   { enabled: isUserLoaded && user?.id !== undefined, refetchOnWindowFocus: false }
   // );
 
   function handleSubmit() {
@@ -96,7 +103,7 @@ const Arman: NextPage = () => {
       setInput("");
       fireSendSoundEffect();
       setMessages((prev) => [...prev, { content: input, role: "user" }]);
-      // mutate(messages.concat({ content: input, role: "user" }));
+      mutate(messages.concat({ content: input, role: "user" }));
     }
   }
   function fireSendSoundEffect() {
@@ -112,14 +119,19 @@ const Arman: NextPage = () => {
   }
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, [isLoaded]);
+  }, [isUserLoaded]);
 
   useEffect(() => {
     chatUIRef.current?.scrollTo({
       top: chatUIRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [isLoaded, messages]);
+  }, [isUserLoaded, messages]);
+
+  useEffect(() => {
+    fireSendSoundEffect();
+    setMessages(initialMessages);
+  }, []);
 
   return (
     <>
@@ -135,9 +147,10 @@ const Arman: NextPage = () => {
       `}</style>
       <Nav user={user} isSignedIn={isSignedIn} />
       {isSignedIn ? (
-        <div className="flex flex-col gap-2 w-[700px] max-h-screen h-screen mx-auto mt-10 py-4">
+        <div className="flex flex-col gap-2 w-screen sm:w-[700px] max-h-screen h-[100svh] mx-auto mt-10 py-4">
           <audio
             ref={sendSoundEffect}
+            preload="auto"
             src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"
           ></audio>
           <div
@@ -206,7 +219,7 @@ const Arman: NextPage = () => {
                 </PopoverContent>
               </Popover>
             </div>
-            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(odd)]:self-end [&>*:nth-child(odd)]:rounded-br-[2px] [&>*:nth-child(odd)]:bg-sky-500 [&>*:nth-child(odd)]:text-white [&>*:nth-child(even)]:self-start [&>*:nth-child(even)]:rounded-bl-[2px] [&>*:nth-child(even)]:bg-slate-300 p-2">
+            <div className="flex flex-col flex-grow justify-end gap-4 w-full [&>*:nth-child(even)]:self-end [&>*:nth-child(even)]:rounded-br-[2px] [&>*:nth-child(even)]:bg-sky-500 [&>*:nth-child(even)]:text-white [&>*:nth-child(odd)]:self-start [&>*:nth-child(odd)]:rounded-bl-[2px] [&>*:nth-child(odd)]:bg-slate-300 p-2">
               {messages.map((m, index) => {
                 return (
                   <div
@@ -251,7 +264,9 @@ const Arman: NextPage = () => {
               autoFocus
               disabled={initRecording || recordings.length > 0}
               placeholder={
-                recordings.length > 0 ? "Click the button to send voice message" : "Type your message..."
+                recordings.length > 0
+                  ? "Click the button to send voice message"
+                  : "Type your message..."
               }
             />
             <div>

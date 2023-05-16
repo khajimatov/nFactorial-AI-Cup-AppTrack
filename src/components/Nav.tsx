@@ -64,16 +64,16 @@ const Nav = ({
       });
   }
   return (
-    <header className="flex items-center w-[500px] md:w-[700px] lg:w-[900px] justify-between mx-auto">
+    <header className="flex items-center w-full md:w-[700px] lg:w-[900px] justify-between mx-auto">
       <section className="flex items-center gap-2">
         <PersonaLogo width={30} height={30} />
         <Link href="/" className="text-[18px] font-bold">
-          Persóna <small className="font-normal">from 🇰🇿</small>
+          Persóna
         </Link>
       </section>
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:block">
             <NavigationMenuTrigger>Tech stack</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -116,7 +116,7 @@ const Nav = ({
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="w-[80px] w-fit h-[40px]">
+      <div className="w-fit h-[40px]">
         {isSignedIn ? (
           //eslint-disable-next-line @typescript-eslint/no-misused-promises
           <Button variant="outline" onClick={signOutHandler}>

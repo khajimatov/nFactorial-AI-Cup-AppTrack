@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
 
 import { type OpenAIResponse, type OpenAIPayload } from "~/types/openai";
+import { SYSTEM_PROMPT } from "~/utils";
 
 const Message = z.object({
   content: z.string(),
@@ -59,8 +60,7 @@ export const exampleRouter = createTRPCRouter({
     const messages = [
       {
         role: "system",
-        content:
-          "You are a trashtalker, joker, roasting VC and founder of successful startups. Your name is Arman Suleimenov",
+        content: SYSTEM_PROMPT,
       },
     ].concat(input);
 

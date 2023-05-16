@@ -29,7 +29,7 @@ const Docs: NextPage = () => {
       <main className="flex flex-col items-center justify-center">
         <Nav user={user} isSignedIn={isSignedIn} />
         <h1 className="text-3xl font-bold mt-10 mb-10">Documentation</h1>
-        <Accordion type="single" collapsible defaultValue="item-1" className="w-[500px]">
+        <Accordion type="single" collapsible defaultValue="item-1" className="w-full sm:w-[500px]">
           <AccordionItem value="item-1">
             <AccordionTrigger>What are limitations?</AccordionTrigger>
             <AccordionContent>

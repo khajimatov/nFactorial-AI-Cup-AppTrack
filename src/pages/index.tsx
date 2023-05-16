@@ -33,16 +33,16 @@ const Home: NextPage = () => {
           style={{ backgroundImage: `url('${commandGif.src}')` }}
           className="command-gif hidden md:block left-0 md:left-[10%] lg:left-[15%]"
         ></div>
-        <div className="mt-4">
-          <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-1 rounded-full">
-            BETA
+        <div className="mt-8">
+          <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-1 rounded-full">
+            EXPERIMENT
           </span>
           <h1 className="scroll-m-20 text-4xl lg:text-5xl text-center font-bold tracking-tight title">
             Persona Playground
           </h1>
         </div>
         <p className="leading-7 text-center [&:not(:first-child)]:mt-6">
-          Create, Interact, and Communicate with AI Characters.
+          Create, Interact, and Communicate with&nbsp;AI&nbsp;Characters.
           <br />
           Some of them you may already know.👀
         </p>

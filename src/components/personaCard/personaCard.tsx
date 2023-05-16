@@ -28,13 +28,12 @@ const PersonaCard = ({ isSignedIn }: { isSignedIn: boolean | undefined }) => {
             className="w-full h-[200px] object-cover object-center"
             src={armanPic}
             alt="Arman Suleimenov"
-            width={300}
             height={150}
             priority
           />
         </div>
         <div className="p-5">
-          <span className="bg-green-100 rounded-full text-green-800 text-xs font-medium mr-2 px-2.5 py-1">
+          <span className="bg-red-100 rounded-full text-red-800 text-xs font-medium mr-2 px-2.5 py-1">
             VOICE
           </span>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">Arman Suleimenov</h4>
