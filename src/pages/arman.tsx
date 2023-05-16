@@ -147,7 +147,7 @@ const Arman: NextPage = () => {
       `}</style>
         <Nav user={user} isSignedIn={isSignedIn} />
         {isSignedIn ? (
-          <div className="flex flex-col gap-2 w-full sm:w-[700px] max-h-screen h-screen mx-auto mt-6 py-4">
+          <div className="flex flex-col gap-2 w-full sm:w-[700px] max-h-screen h-[100svh] mx-auto mt-6 py-4">
             <audio
               ref={sendSoundEffect}
               preload="auto"
