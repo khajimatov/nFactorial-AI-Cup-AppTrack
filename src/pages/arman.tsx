@@ -119,9 +119,6 @@ const Arman: NextPage = () => {
   }
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, [isUserLoaded]);
-
-  useEffect(() => {
     chatUIRef.current?.scrollTo({
       top: chatUIRef.current.scrollHeight,
       behavior: "smooth",
