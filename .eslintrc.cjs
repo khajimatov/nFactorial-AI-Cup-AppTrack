@@ -23,6 +23,7 @@ const config = {
     "plugin:@tanstack/eslint-plugin-query/recommended",
   ],
   rules: {
+    "logical-assignment-operators": "error",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
