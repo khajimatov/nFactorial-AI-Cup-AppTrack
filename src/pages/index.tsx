@@ -2,12 +2,11 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import { useUser } from "@clerk/nextjs";
+import commandGif from "public/command.gif";
+import faceGif from "public/face-id.gif";
 
 import Nav from "~/components/Nav";
 import PersonaCard from "~/components/personaCard/personaCard";
-
-import commandGif from "../../public/command.gif";
-import faceGif from "../../public/face-id.gif";
 
 const Home: NextPage = () => {
   const { user, isSignedIn } = useUser();
@@ -26,10 +25,12 @@ const Home: NextPage = () => {
       <main className="flex flex-col items-center justify-center">
         <Nav user={user} isSignedIn={isSignedIn} />
         <div
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
           style={{ backgroundImage: `url('${faceGif.src}')` }}
           className="face-gif hidden md:block right-0 md:right-[10%] lg:right-[15%]"
         ></div>
         <div
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
           style={{ backgroundImage: `url('${commandGif.src}')` }}
           className="command-gif hidden md:block left-0 md:left-[10%] lg:left-[15%]"
         ></div>
